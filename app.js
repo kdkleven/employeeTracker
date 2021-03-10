@@ -1,17 +1,16 @@
-const mysql = require('mysql');
+const express = require('express');
+const mysql2 = require('mysql2');
 const inquirer = require('inquirer');
 
 require('dotenv').config();
 
-const connection = mysql.createConnection (
-    {
-        user: 'root', 
-        password: '',
-        database: 'company_db',
+const connection = mysql2.createConnection({
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database: process.env.DB_NAME,
         host: 'localhost',
         port: 3306
-    }
-);
+    });
 
 connection.connect((err) => {
     if (err) throw err;
@@ -70,16 +69,18 @@ const init = () => {
     );
 }
 
+// MOVE TO READ.js
 const viewAllEmployees = () => {
     const query =
         'SELECT first_name, last_name FROM employee';
     connection.query(query, (err, res) => {
         if (err) throw err;
-        console.table(query);
+        console.table(res);
         init();
     });
 };
 
+// MOVE TO READ.js
 const viewAllEmployeesByDepartment = () => {
     inquirer
         .prompt({
@@ -121,51 +122,55 @@ const viewAllEmployeesByDepartment = () => {
         }
     );
 };
-
+// MOVE TO READ.js
 const viewEmployeesInProduction = () => {
     const query =
-        'SELECT * FROM employee';
+        'SELECT department.name, employee.first_name, employee.last_name FROM department JOIN role ON department.id = role.department_id JOIN employee ON employee.role_id = role.id WHERE department.name = "Production" ORDER BY department.name;';
     connection.query(query, (err, res) => {
         if (err) throw err;
         console.table(res);
         init();
     });  
 };
+// MOVE TO READ.js
 const viewEmployeesInResearchAndDevelopment = () => {
     const query =
-        'SELECT * FROM employee';
+        'SELECT department.name, employee.first_name, employee.last_name FROM department JOIN role ON department.id = role.department_id JOIN employee ON employee.role_id = role.id WHERE department.name = "Research and Development" ORDER BY department.name;';
     connection.query(query, (err, res) => {
         if (err) throw err;
         console.table(res);
         init();
-    });  
+    });    
 };
+// MOVE TO READ.js
 const viewEmployeesInOperations = () => {
     const query =
-        'SELECT * FROM employee';
+        'SELECT department.name, employee.first_name, employee.last_name FROM department JOIN role ON department.id = role.department_id JOIN employee ON employee.role_id = role.id WHERE department.name = "Operations" ORDER BY department.name;';
     connection.query(query, (err, res) => {
         if (err) throw err;
         console.table(res);
         init();
-    });  
+    });    
 };
+// MOVE TO READ.js
 const viewEmployeesInMarketing = () => {
     const query =
-        'SELECT * FROM employee';
+        'SELECT department.name, employee.first_name, employee.last_name FROM department JOIN role ON department.id = role.department_id JOIN employee ON employee.role_id = role.id WHERE department.name = "Marketing" ORDER BY department.name;';
     connection.query(query, (err, res) => {
         if (err) throw err;
         console.table(res);
         init();
-    });  
+    });    
 };
+// MOVE TO READ.js
 const viewEmployeesInFinance = () => {
     const query =
-        'SELECT * FROM employee';
+        'SELECT department.name, employee.first_name, employee.last_name FROM department JOIN role ON department.id = role.department_id JOIN employee ON employee.role_id = role.id WHERE department.name = "Finance" ORDER BY department.name;';
     connection.query(query, (err, res) => {
         if (err) throw err;
         console.table(res);
         init();
-    });  
+    });    
 };
 
 
