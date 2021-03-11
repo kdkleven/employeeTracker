@@ -1,9 +1,9 @@
+const connection = require('./connection/connection');
 const inquirer = require('inquirer');
 const c = require('./lib/create');
 const r = require('./lib/read');
 const u = require('./lib/update');
 const d = require('./lib/delete');
-const connection = require('./connection/connection');
 
 connection.connect((err) => {
     if (err) throw err;
@@ -19,18 +19,35 @@ const init = () => {
             type: 'list',
             message: 'What would you like to do?',
             choices: [
-                'View All Employees',
-                'View All Employees By Department',
+                'View All Employees', //Done
+                'View All Employees By Department', //Done
                 'View All Employees By Manager',
-                'Add Employee',
-                'Remove Employee',
-                'Update Employee Role',
-                'Update Employee Manager',
-                'Exit'
+                'View All Employees By Role',
+                'View All Roles', //Done
+                'View All Departments', //Done
+                'View Department Budgets',
+                'Add Department', 
+                'Add Employee', //Done
+                'Add Role', 
+                'Update Employee Role', 
+                'Update Employee Manager', 
+                'Remove Department', 
+                'Remove Employee', 
+                'Remove Role', 
+                'Exit' //Done
             ],
         })
         .then((res) => {
             switch (res.menu) {
+                case ('Add Department'):
+                    c.addDepartment();
+                    break;
+                case ('Add Employee'):
+                    c.addEmployee();
+                    break;
+                case ('Add Role'):
+                    c.addRole();
+                    break;
                 case ('View All Employees'):
                     r.viewAllEmployees();
                     break;
@@ -40,17 +57,26 @@ const init = () => {
                 case ('View All Employees By Manager'):
                     r.viewAllEmployeesByManager();
                     break;
-                case ('Add Employee'):
-                    addEmployee();
+                case ('View All Employees By Role'):
+                    r.viewAllEmployeesByManager();
                     break;
-                case ('Remove Employee'):
-                    removeEmployee();
+                case ('View All Roles'):
+                    r.viewAllRoles();
+                    break;
+                case ('View All Departments'):
+                    r.viewAllDepartments();
+                    break;
+                case ('View Utilized Department Budgets'):
+                    r.viewAllDepartments();
                     break;
                 case ('Update Employee Role'):
-                    updateEmployeeRole();
+                    u.updateEmployeeRole();
                     break;
                 case ('Update Employee Manager'):
-                    updateEmployeeManager();
+                    u.updateEmployeeManager();
+                    break;
+                case ('Remove Employee'):
+                    d.removeEmployee();
                     break;
                 case 'Exit':
                     connection.end();
@@ -59,85 +85,7 @@ const init = () => {
                     console.log(`Something went wrong: ${res.menu}`);
                     break;
             }
-        }
-        );
-};
-
-
-
-const addEmployee = () => {
-    const query1 = 'SELECT id, title FROM role';
-    const query2 = 'SELECT id, first_name, last_name FROM employee WHERE manager_id != role_id';
-    var roleChoices = [];
-    var managerChoices = [];
-
-    connection.query(query1, (err, res) => {
-        if (err) throw err;
-        roleChoices = res.map(({ id, title }) => ({
-            name: title,
-            value: id,
-        }));
-        connection.query(query2, (err, res) => {
-            if (err) throw err;
-            managerChoices = res.map(({ id, first_name, last_name }) => ({
-                name: [first_name + ' ' + last_name],
-                value: id,
-            }));
-            addEmployeeHelper(roleChoices, managerChoices);
         });
-    });
 };
 
-const addEmployeeHelper = (roleChoices, managerChoices) => {
-    inquirer.prompt(
-        [
-            {
-                name: 'first_name',
-                type: 'input',
-                message: "What is the employee's first name?",
-            },
-            {
-                name: 'last_name',
-                type: 'input',
-                message: "What is the employee's last name?",
-            },
-            {
-                name: 'role',
-                type: 'list',
-                message: "What is the employee's role?",
-                choices: roleChoices
-            },
-            {
-                name: 'manager',
-                type: 'list',
-                message: "Who is the employee's manager?",
-                choices: managerChoices
-            }
-
-        ]
-    )
-    .then((res) => {
-        //console.log('Inserting new employee...\n');
-        connection.query(
-            'INSERT INTO employee SET ?',
-            {
-                first_name: res.first_name,
-                last_name: res.last_name,
-                role_id: res.role,
-                manager_id: res.manager
-            },
-            function (err, res) {
-                if (err) throw err;
-                const promise1 = new Promise((resolve, reject) => {
-                    console.log(res.affectedRows + " employee added!\n");
-                    resolve('Success!');
-                });
-                promise1.then(() => {
-                    init();
-                });
-            }
-        );
-    });
-};
-
-module.exports = init;
+exports.init = init;
