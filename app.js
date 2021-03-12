@@ -22,18 +22,18 @@ const init = () => {
                 'View All Employees', //Done
                 'View All Employees By Department', //Done
                 'View All Employees By Manager',
-                'View All Employees By Role',
+                //'View All Employees By Role',
                 'View All Roles', //Done
                 'View All Departments', //Done
-                'View Department Budgets',
+                //'View Department Budgets',
                 'Add Department', 
                 'Add Employee', //Done
                 'Add Role', 
                 'Update Employee Role', 
-                'Update Employee Manager', 
+                //'Update Employee Manager', 
                 'Remove Department', 
-                'Remove Employee', 
-                'Remove Role', 
+                //'Remove Employee', 
+                //'Remove Role', 
                 'Exit' //Done
             ],
         })
