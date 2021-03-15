@@ -3,10 +3,36 @@ const inquirer = require('inquirer');
 const c = require('./lib/create');
 const r = require('./lib/read');
 const u = require('./lib/update');
-const d = require('./lib/delete');
+// const d = require('./lib/delete');
 
 connection.connect((err) => {
     if (err) throw err;
+    console.log(`
+    ________                          __                                         
+   /        |                        /  |                                        
+   $$$$$$$$/  _____  ____    ______  $$ |  ______   __    __   ______    ______  
+   $$ |__    /     \/    \  /      \ $$ | /      \ /  |  /  | /      \  /      \ 
+   $$    |   $$$$$$ $$$$  |/$$$$$$  |$$ |/$$$$$$  |$$ |  $$ |/$$$$$$  |/$$$$$$  |
+   $$$$$/    $$ | $$ | $$ |$$ |  $$ |$$ |$$ |  $$ |$$ |  $$ |$$    $$ |$$    $$ |
+   $$ |_____ $$ | $$ | $$ |$$ |__$$ |$$ |$$ \__$$ |$$ \__$$ |$$$$$$$$/ $$$$$$$$/ 
+   $$       |$$ | $$ | $$ |$$    $$/ $$ |$$    $$/ $$    $$ |$$       |$$       |
+   $$$$$$$$/ $$/  $$/  $$/ $$$$$$$/  $$/  $$$$$$/   $$$$$$$ | $$$$$$$/  $$$$$$$/ 
+                           $$ |                    /  \__$$ |                    
+                           $$ |                    $$    $$/                     
+                           $$/                      $$$$$$/                      
+    ________                            __                                       
+   /        |                          /  |                                      
+   $$$$$$$$/______   ______    _______ $$ |   __   ______    ______              
+      $$ | /      \ /      \  /       |$$ |  /  | /      \  /      \             
+      $$ |/$$$$$$  |$$$$$$  |/$$$$$$$/ $$ |_/$$/ /$$$$$$  |/$$$$$$  |            
+      $$ |$$ |  $$/ /    $$ |$$ |      $$   $$<  $$    $$ |$$ |  $$/             
+      $$ |$$ |     /$$$$$$$ |$$ \_____ $$$$$$  \ $$$$$$$$/ $$ |                  
+      $$ |$$ |     $$    $$ |$$       |$$ | $$  |$$       |$$ |                  
+      $$/ $$/       $$$$$$$/  $$$$$$$/ $$/   $$/  $$$$$$$/ $$/                   
+                                                                                 
+                                                                                 
+                                                                                 
+   `)
     init();
 });
 
@@ -19,21 +45,14 @@ const init = () => {
             type: 'list',
             message: 'What would you like to do?',
             choices: [
-                'View All Employees', //Done
-                'View All Employees By Department', //Done
-                //'View All Employees By Manager',
-                //'View All Employees By Role',
-                'View All Roles', //Done
-                'View All Departments', //Done
-                //'View Department Budgets',
                 'Add Department', 
-                'Add Employee', //Done
-                'Add Role', 
-                //'Update Employee Role', 
-                //'Update Employee Manager', 
-                //'Remove Department', 
-                //'Remove Employee', 
-                //'Remove Role', 
+                'Add Employee',
+                'Add Role',
+                'View All Departments',
+                'View All Employees',
+                'View All Roles',
+                'View All Employees By Department',
+                'Update Employee Role',
                 'Exit' //Done
             ],
         })
