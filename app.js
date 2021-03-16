@@ -1,3 +1,4 @@
+// require dependencies and library files/helpers
 const connection = require('./connection/connection');
 const inquirer = require('inquirer');
 const c = require('./lib/create');
@@ -5,6 +6,7 @@ const r = require('./lib/read');
 const u = require('./lib/update');
 // const d = require('./lib/delete');
 
+// Create the connection
 connection.connect((err) => {
     if (err) throw err;
     console.log(`
@@ -33,7 +35,9 @@ connection.connect((err) => {
                                                                                  
                                                                                  
    `)
-    init();
+    
+   //call init
+   init();
 });
 
 // Initialize the application
@@ -56,6 +60,7 @@ const init = () => {
                 'Exit' //Done
             ],
         })
+        // depeneding on the response, call the corresponding helper function to execute the query
         .then((res) => {
             switch (res.menu) {
                 case ('Add Department'):
