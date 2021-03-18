@@ -49,29 +49,20 @@ const init = () => {
             type: 'list',
             message: 'What would you like to do?',
             choices: [
-                'Add Department', 
-                'Add Employee',
-                'Add Role',
                 'View All Departments',
                 'View All Employees',
                 'View All Roles',
                 'View All Employees By Department',
-                'Update Employee Role',
+                'Add Department', 
+                'Add Employee',
+                'Add Role',
+                //'Update Employee Role',
                 'Exit' //Done
             ],
         })
         // depeneding on the response, call the corresponding helper function to execute the query
         .then((res) => {
             switch (res.menu) {
-                case ('Add Department'):
-                    c.addDepartment();
-                    break;
-                case ('Add Employee'):
-                    c.addEmployee();
-                    break;
-                case ('Add Role'):
-                    c.addRole();
-                    break;
                 case ('View All Departments'):
                     r.viewAllDepartments();
                     break;
@@ -87,21 +78,18 @@ const init = () => {
                 case ('View All Employees By Role'):
                     r.viewAllEmployeesByManager();
                     break;
-                // case ('View All Employees By Manager'):
-                //     r.viewAllEmployeesByManager();
-                //     break;
-                // case ('View Utilized Department Budgets'):
-                //     r.viewAllDepartments();
-                //     break;
+                case ('Add Department'):
+                    c.addDepartment();
+                    break;
+                case ('Add Employee'):
+                    c.addEmployee();
+                    break;
+                case ('Add Role'):
+                    c.addRole();
+                    break;
                 case ('Update Employee Role'):
                     u.updateEmployeeRole();
                     break;
-                // case ('Update Employee Manager'):
-                //     u.updateEmployeeManager();
-                //     break;
-                // case ('Remove Employee'):
-                //     d.removeEmployee();
-                //     break;
                 case 'Exit':
                     connection.end();
                     break;
